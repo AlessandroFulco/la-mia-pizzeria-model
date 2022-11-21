@@ -6,11 +6,15 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
-        public IActionResult Index()
+        PizzeriaDbContext db;
+
+        public PizzaController() : base()
         {
             //Collegamento con il db
-            PizzeriaDbContext db = new PizzeriaDbContext();
-
+            db = new PizzeriaDbContext();
+        }
+        public IActionResult Index()
+        {
             List<Pizza> lista = db.Pizze.ToList();
 
             return View(lista);
@@ -18,9 +22,6 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Detail(int id)
         {
-            //Collegamento con il db
-            PizzeriaDbContext db = new PizzeriaDbContext();
-
             //selezione della pizza dal db secondo l'id passato
             Pizza pizza = db.Pizze.Where(p => p.Id == id).FirstOrDefault();
 
